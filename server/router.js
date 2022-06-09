@@ -2,6 +2,7 @@ import Handlers from './handlers';
 import Conf from './context/conf';
 import bodyParser from 'body-parser';
 import url from 'url';
+import { parse } from 'qs';
 
 const handleRequest = (method) => (path, cb) => {
   WebApp.rawConnectHandlers.use(path, (req, res, next) => {
@@ -10,12 +11,7 @@ const handleRequest = (method) => (path, cb) => {
       return;
     }
 
-    const queryString = url.parse(req.url).query || '';
-    const queryParams = { query: {} };
-    queryString.split('&').forEach((pair) => {
-      queryParams.query[pair.split('=')[0]] = pair.split('=')[1];
-    });
-
+    const query = (parse(req.url)) ? { query: { p: parse(req.url)['/show?p'] } } : { query: {} }
     Promise.resolve()
       .then(() => new Promise(resolve => {
         bodyParser.urlencoded({ extended: false })(req, res, resolve);
@@ -23,7 +19,7 @@ const handleRequest = (method) => (path, cb) => {
       .then(() => new Promise(resolve => {
         bodyParser.json({ limit: '30mb' }).call(null, req, res, resolve);
       }))
-      .then(() => cb(queryParams, req, res, next))
+      .then(() => cb(query, req, res, next))
       .catch((e) => {
         console.log('Exception undandled:');
         console.log(e.stack);
