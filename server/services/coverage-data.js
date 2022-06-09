@@ -1,6 +1,5 @@
 import Conf from './../context/conf';
 import path from 'path';
-import fs from 'fs';
 
 const Coverage = Npm.require('istanbul-lib-coverage');
 const Report = Npm.require('istanbul-lib-report');
@@ -27,7 +26,7 @@ export default CoverageData = {
       if (childs[i].getRelativeName() === filePath) {
         child = childs[i];
         // fix the path if possible
-        if (child && child.fileCoverage && 
+        if (child && child.fileCoverage &&
           child.fileCoverage.data && child.fileCoverage.data.path &&
           child.fileCoverage.data.path.indexOf(Conf.COVERAGE_APP_FOLDER)) {
           // add the folder in the path if not present
