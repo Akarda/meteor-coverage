@@ -16,7 +16,7 @@ export default class {
     options = Object.assign({}, {
       path: path.join(Conf.COVERAGE_APP_FOLDER, Conf.COVERAGE_EXPORT_FOLDER),
       /* istanbul ignore next: ternary operator */
-      verbose: Log.COVERAGE_VERBOSE ? true : false
+      verbose: !!Log.COVERAGE_VERBOSE
     }, options);
 
     Log.info('export coverage using the following format [', type, '] options [', options, ']');

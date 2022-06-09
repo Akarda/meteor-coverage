@@ -1,5 +1,4 @@
 import Conf from './../context/conf';
-import Log from './../context/log';
 import ReportCommon from './report-common';
 import IstanbulGenericReporter from './report-generic';
 import path from 'path';
@@ -74,7 +73,7 @@ export default class {
     }
 
     let p = Object.keys(reports).map((reportType) => {
-      let reportOptions = Object.assign({}, this.options, {verbose: reportType === 'html' ? false : true});
+      let reportOptions = Object.assign({}, this.options, {verbose: reportType !== 'html'});
       return remapIstanbul.writeReport(collector, reportType, reportOptions, reports[reportType], sourceStore);
     });
 
