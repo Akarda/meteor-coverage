@@ -11,7 +11,7 @@ getCoverageObject = function () {
   return global.__coverage__;
 };
 
-setCoverageObject = function (obj) {
+const setCoverageObject = function (obj) {
   global.__coverage__ = obj;
 };
 

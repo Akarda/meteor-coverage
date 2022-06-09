@@ -3,8 +3,9 @@ import Core from './services/core';
 import ReportService from './report/report-service';
 import fs from 'fs';
 import path from 'path';
+import Log from './context/log'
 
-showCoverage = function (params, req, res, next) {
+const showCoverage = function (params, req, res, next) {
   let options = {
     'filepath': params.query.p
   };
@@ -12,9 +13,9 @@ showCoverage = function (params, req, res, next) {
   reportService.generateReport(res, 'http', options);
 };
 
-getAsset = function (params, req, res, next) {
-  var assetsDir = path.join(path.resolve('.'), 'assets/packages/lmieulet_meteor-coverage/assets/'),
-    filename = params.filename;
+const getAsset = function (params, req, res, next) {
+  const assetsDir = path.join(path.resolve('.'), 'assets/packages/lmieulet_meteor-coverage/assets/'),
+    filename = params.filename
   fs.exists(path.join(assetsDir, filename), function (exists) {
     if (!exists) {
       fs.exists(path.join(assetsDir, '/vendor/', filename), function (exists) {
@@ -42,16 +43,16 @@ getAsset = function (params, req, res, next) {
   });
 };
 
-addClientCoverage = function (params, req, res, next) {
-  var body = req.body;
+const addClientCoverage = function (params, req, res, next) {
+  const body = req.body
   /* istanbul ignore else */
   if (!body) {
     res.writeHead(400);
     res.end();
   }
 
-  var clientCoverage;
-  for (var property in body) {
+  let clientCoverage
+  for (const property in body) {
     /* istanbul ignore else */
     if (body.hasOwnProperty(property)) {
       clientCoverage = body[property];
@@ -66,8 +67,8 @@ addClientCoverage = function (params, req, res, next) {
   }
 };
 
-exportFile = function (params, req, res, next) {
-  var _type = params.type;
+const exportFile = function (params, req, res, next) {
+  const _type = params.type
   /* istanbul ignore next: ternary operator */
   type = Conf.reportTypes.allowed.indexOf(_type) > -1 ? _type : 'coverage';
   try {
@@ -79,7 +80,7 @@ exportFile = function (params, req, res, next) {
     res.end('Nothing has been export');
   }
 };
-importCoverage = function (params, req, res, next) {
+const importCoverage = function (params, req, res, next) {
   try {
     Core.importCoverage(res);
   } catch (e) {

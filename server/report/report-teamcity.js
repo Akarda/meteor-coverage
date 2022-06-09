@@ -16,7 +16,7 @@ export default class {
 
   generate() {
     let coverage = Core.getCoverageObject();
-    var childs = CoverageData.getLcovonlyReport(coverage);
+    const childs = CoverageData.getLcovonlyReport(coverage)
 
     if (childs.length === 0) {
       this.res.setHeader('Content-type', 'text/plain');
@@ -29,7 +29,7 @@ export default class {
   }
 
   writeFile (childs) {
-    for (var i = 0; i < childs.length; i++) {
+    for (let i = 0; i < childs.length; i++) {
       // Remove the COVERAGE_APP_FOLDER from the filepath
       childs[i].fileCoverage.data.path = childs[i].fileCoverage.data.path.replace(Conf.COVERAGE_APP_FOLDER, '');
     }

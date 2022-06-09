@@ -40,7 +40,7 @@ export default class {
   }
 
   generate() {
-    var coverage = Core.getCoverageObject();
+    const coverage = Core.getCoverageObject()
     /* istanbul ignore else */
     if (!(coverage && Object.keys(coverage).length > 0)) {
       this.res.setHeader('Content-type', 'text/plain');
@@ -48,19 +48,19 @@ export default class {
     }
     this.res.setHeader('Content-type', 'text/html');
     this.alterFS(this.res);
-    var context = this.getContext(this.res);
-    var report = ReportImpl.create('html', this.opts);
+    const context = this.getContext(this.res)
+    const report = ReportImpl.create('html', this.opts)
     if (this.options.filepath) {
-      var child = CoverageData.getFileReport(coverage, this.options.filepath);
+      const child = CoverageData.getFileReport(coverage, this.options.filepath)
       report.onDetail(child, context);
     } else {
-      var root = CoverageData.getTreeReport(coverage);
+      const root = CoverageData.getTreeReport(coverage)
       report.onSummary(root, context);
     }
   }
 
   getContext(res) {
-    var context = Report.createContext();
+    const context = Report.createContext()
     Object.defineProperty(context, 'writer', {
       value: {
         writerForDir: {

@@ -27,7 +27,7 @@ export default class {
           if (typeof node === 'string') {
             return node;
           }
-          var filePath = node.getQualifiedName();
+          let filePath = node.getQualifiedName()
 
           if (node.isSummary()) {
             filePath = path.join(outputPath, 'index.html');
@@ -50,14 +50,14 @@ export default class {
   generate() {
     const folderPath = this.options.path;
     this.copyStatic();
-    var coverage = Core.getCoverageObject();
+    const coverage = Core.getCoverageObject()
 
     /* istanbul ignore else */
     if (!(coverage && Object.keys(coverage).length > 0)) {
       this.res.statusCode = 500;
       return this.res.end('{"type":"failed", "message": "No coverage information have been collected"}');
     }
-    var root = CoverageData.getTreeReport(coverage);
+    const root = CoverageData.getTreeReport(coverage)
     let filepath = path.join(folderPath, 'index.html');
 
     this.report.onSummary(root, ReportCommon.getContext(filepath));
@@ -66,7 +66,7 @@ export default class {
     const report = this.report;
     // Todo : use future
     childrens.forEach(function (child) {
-      var filepath = path.join(folderPath, child.getRelativeName() + '.html');
+      const filepath = path.join(folderPath, child.getRelativeName() + '.html')
       Log.info('Creating a new html report', filepath);
       let fileReport = CoverageData.getFileReport(coverage, child.getRelativeName());
       report.onDetail(fileReport, ReportCommon.getContext(filepath));
@@ -79,9 +79,8 @@ export default class {
     this.report.onStart(null, this.getFolderContext(this.options.path));
   }
 
-
   getFolderContext(folderpath) {
-    var context = Report.createContext();
+    const context = Report.createContext({})
     Object.defineProperty(context, 'writer', {
       value: {
         copyFile: function (sourcePath, destPath) {
